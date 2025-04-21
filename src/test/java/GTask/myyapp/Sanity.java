@@ -202,7 +202,7 @@ WebElement tableRow = driver.findElement(By.xpath("//tr[th[text()='Brains'] and 
 		    throw e; // Rethrow to ensure test failure
 		}
 		System.out.println("--------------------------*****************-----------------------");
-		String Hcount_2 = "Haematoxylin & Eosin (467)";
+		String Hcount_2 = "H&E (467)";
 		WebElement H3 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=HE')])[3]"));
 		String Hcount3 = H3.getText();
 		System.out.println("Expected HEOS Count: " + Hcount_2);
@@ -230,7 +230,7 @@ WebElement tableRow = driver.findElement(By.xpath("//tr[th[text()='Brains'] and 
 		    throw e; // Rethrow to ensure test failure
 		}
 		System.out.println("--------------------------*****************-----------------------");
-		String Hcount_3 = "Haematoxylin & Eosin (687)";
+		String Hcount_3 = "H&E (687)";
 		WebElement H4 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=HE')])[4]"));
 		String Hcount4 = H4.getText();
 		System.out.println("Expected HEOS Count: " + Hcount_3);
@@ -258,7 +258,7 @@ WebElement tableRow = driver.findElement(By.xpath("//tr[th[text()='Brains'] and 
 		    throw e; // Rethrow to ensure test failure
 		}
 		System.out.println("--------------------------*****************-----------------------");
-		String Hcount_4 = "Haematoxylin & Eosin (335)";
+		String Hcount_4 = "H&E (335)";
 		WebElement H5 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=HE')])[5]"));
 		String Hcount5 = H5.getText();
 		System.out.println("Expected HEOS Count: " + Hcount_4);
