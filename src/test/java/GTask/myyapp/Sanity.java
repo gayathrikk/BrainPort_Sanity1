@@ -64,7 +64,7 @@ public class Sanity {
 		AssertJUnit.assertEquals("Heading2 are not equal", Heading2, heading2);  
 
 		// Expected value (without newlines)
-		String heading3 = "DHARANI A 3D Developing Human-brain Atlas as a Resource to Advance Neuroscience Internationally Integrated Multimodal Imaging and High-resolution Histology";
+		String heading3 = "A 3D Developing Human-brain Atlas Resource to Advance Neuroscience Internationally -- Integrated Multimodal Imaging and High-resolution Histology of the second trimester";
 
 		// Find the element and capture the actual text
 		WebElement text3 = driver.findElement(By.xpath("//div[@class='paper-title']"));
