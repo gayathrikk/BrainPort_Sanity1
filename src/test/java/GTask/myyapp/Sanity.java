@@ -67,7 +67,7 @@ public class Sanity {
 		String heading3 = "DHARANI A 3D Developing Human-brain Atlas as a Resource to Advance Neuroscience Internationally Integrated Multimodal Imaging and High-resolution Histology";
 
 		// Find the element and capture the actual text
-		WebElement text3 = driver.findElement(By.xpath("//h3[span[contains(text(), 'DHARANI')]]"));
+		WebElement text3 = driver.findElement(By.xpath("//div[@class='paper-title']"));
 		String Heading3 = text3.getText().trim();
 
 		// Normalize both the expected and actual values by removing newlines and extra spaces
