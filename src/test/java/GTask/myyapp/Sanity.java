@@ -146,7 +146,7 @@ WebElement tableRow = driver.findElement(By.xpath("//tr[th[text()='Brains'] and 
 		    System.err.println("Assertion Failed: " + e.getMessage());
 		    throw e; // Rethrow to ensure test failure
 		}
-		String Hcount = "Haematoxylin & Eosin (341)";
+		String Hcount = "H&E (341)";
 		WebElement H1 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=HE')])[1]"));
 		String Hcount1 = H1.getText();
 		System.out.println("Expected HEOS Count: " + Hcount);
