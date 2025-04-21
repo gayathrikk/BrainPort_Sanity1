@@ -45,7 +45,7 @@ public class Sanity {
 
 		String heading1 = "Sudha Gopalakrishnan Brain Centre";
 		WebDriverWait wait = new WebDriverWait(driver, 10);  // Wait for 10 seconds for the element to be visible
-		WebElement text1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[@class='main-title']")));
+		WebElement text1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[@class='main-title mb-0']")));
 		String Heading1 = text1.getText().trim();  // Trim the text to remove extra spaces or newlines
 
 		System.out.println("Head1: '" + Heading1 + "'");  // Debugging line to print the actual text
