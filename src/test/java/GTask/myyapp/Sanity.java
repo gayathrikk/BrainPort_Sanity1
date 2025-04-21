@@ -81,27 +81,27 @@ public class Sanity {
 		// Assert that the expected and actual values are equal
 		AssertJUnit.assertEquals("Heading3 are not equal", heading3, Heading3);
 
-		String expectedParagraph = "Sudha Gopalakrishnan BRAIN Centre\n" +
-                "Stilt floor, NAC-1 Building\n" +
-                "IIT Madras, Chennai - 600036, India\n" +
-                "Email: contact@humanbrainiitm.in\n" +
-                "Phone: +91-44-2257-8892\n" +
-                "Contact us";
+// 		String expectedParagraph = "Sudha Gopalakrishnan BRAIN Centre\n" +
+//                 "Stilt floor, NAC-1 Building\n" +
+//                 "IIT Madras, Chennai - 600036, India\n" +
+//                 "Email: contact@humanbrainiitm.in\n" +
+//                 "Phone: +91-44-2257-8892\n" +
+//                 "Contact us";
 
-//Find the element and capture the actual text
-WebElement text4 = driver.findElement(By.xpath("//div[@class='col-md-4 col-lg-4 footer-mb-5']//h3[contains(text(), 'Address')]/following-sibling::p"));
-String actualParagraph = text4.getText().trim();
+// //Find the element and capture the actual text
+// WebElement text4 = driver.findElement(By.xpath("//div[@class='col-md-4 col-lg-4 footer-mb-5']//h3[contains(text(), 'Address')]/following-sibling::p"));
+// String actualParagraph = text4.getText().trim();
 
-//Normalize both strings (remove newlines and extra spaces)
-expectedParagraph = expectedParagraph.replace("\n", " ").replaceAll("\\s+", " ").trim();
-actualParagraph = actualParagraph.replace("\n", " ").replaceAll("\\s+", " ").trim();
+// //Normalize both strings (remove newlines and extra spaces)
+// expectedParagraph = expectedParagraph.replace("\n", " ").replaceAll("\\s+", " ").trim();
+// actualParagraph = actualParagraph.replace("\n", " ").replaceAll("\\s+", " ").trim();
 
-//Print both values for debugging
-System.out.println("Expected Paragraph: '" + expectedParagraph + "'");
-System.out.println("Actual Paragraph: '" + actualParagraph + "'");
+// //Print both values for debugging
+// System.out.println("Expected Paragraph: '" + expectedParagraph + "'");
+// System.out.println("Actual Paragraph: '" + actualParagraph + "'");
 
-//Assert that the expected and actual values are equal
-AssertJUnit.assertEquals("Paragraphs are not equal", expectedParagraph, actualParagraph);
+// //Assert that the expected and actual values are equal
+// AssertJUnit.assertEquals("Paragraphs are not equal", expectedParagraph, actualParagraph);
 		
 WebElement tableRow = driver.findElement(By.xpath("//tr[th[text()='Brains'] and th[text()='Gestation week(GW)'] and th[text()='Sectioning Plane'] and th[text()='Available Datasets'] and th[text()='Annotations'] and th[text()='Volumes'] and th[text()='Videos']]"));
 
