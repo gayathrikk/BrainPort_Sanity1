@@ -1,519 +1,182 @@
 package GTask.myyapp;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.Set;
+import java.net.URI;
+import java.util.Map;
+import java.util.Properties;
+import java.util.HashMap;
+import java.util.concurrent.*;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.AssertJUnit;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
 public class Sanity {
-	private RemoteWebDriver driver;
-
-	@BeforeTest
-
-	public void setup() throws MalformedURLException {
-
-		DesiredCapabilities dc = DesiredCapabilities.chrome();
-
-		URL url = new URL("http://172.20.23.92:4444/wd/hub");
-
-		driver = new RemoteWebDriver(url, dc);
-	}
-
-	@Test(priority = 1)
-
-	public void testSanity() throws InterruptedException {
-		driver.get("https://brainportal.humanbrain.in/");
-		driver.manage().window().maximize();
-		String currentURL = driver.getCurrentUrl();
-		System.out.println("Current URL: " + currentURL);
-	}
-	@Test(priority = 2)
-
-	public void homepagecontent() {
-
-		String heading1 = "Sudha Gopalakrishnan Brain Centre";
-		WebDriverWait wait = new WebDriverWait(driver, 10);  // Wait for 10 seconds for the element to be visible
-		WebElement text1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[@class='main-title mb-0']")));
-		String Heading1 = text1.getText().trim();  // Trim the text to remove extra spaces or newlines
-
-		System.out.println("Head1: '" + Heading1 + "'");  // Debugging line to print the actual text
-
-		// Assert if the expected heading matches the actual heading
-		AssertJUnit.assertEquals("Heading1 is not equal", Heading1, heading1);
-		
-		String heading2 = "Indian Institute of Technology Madras";
-		WebElement text2 = driver.findElement(By.xpath("//p[@class='sub-title']"));
-		String Heading2 = text2.getText().trim();  // Trim to remove leading/trailing spaces
-
-		// Log the actual extracted value
-		System.out.println("Actual Heading2: '" + Heading2 + "'");
-
-		// Now assert with detailed logging
-		AssertJUnit.assertEquals("Heading2 are not equal", Heading2, heading2);  
-
-		// Expected value (without newlines)
-		String heading3 = "DHARANI: A 3D Developing Human-brain Atlas Resource to Advance Neuroscience Internationally -- Integrated Multimodal Imaging and High-resolution Histology of the second trimester";
-
-		// Find the element and capture the actual text
-		WebElement text3 = driver.findElement(By.xpath("//div[@class='paper-title']"));
-		String Heading3 = text3.getText().trim();
-
-		// Normalize both the expected and actual values by removing newlines and extra spaces
-		heading3 = heading3.replace("\n", " ").replaceAll("\\s+", " ").trim();
-		Heading3 = Heading3.replace("\n", " ").replaceAll("\\s+", " ").trim();
-
-		// Print both values for debugging
-		System.out.println("Expected: '" + heading3 + "'");
-		System.out.println("Actual: '" + Heading3 + "'");
-
-		// Assert that the expected and actual values are equal
-		AssertJUnit.assertEquals("Heading3 are not equal", heading3, Heading3);
-
-// 		String expectedParagraph = "Sudha Gopalakrishnan BRAIN Centre\n" +
-//                 "Stilt floor, NAC-1 Building\n" +
-//                 "IIT Madras, Chennai - 600036, India\n" +
-//                 "Email: contact@humanbrainiitm.in\n" +
-//                 "Phone: +91-44-2257-8892\n" +
-//                 "Contact us";
-
-// //Find the element and capture the actual text
-// WebElement text4 = driver.findElement(By.xpath("//div[@class='col-md-4 col-lg-4 footer-mb-5']//h3[contains(text(), 'Address')]/following-sibling::p"));
-// String actualParagraph = text4.getText().trim();
-
-// //Normalize both strings (remove newlines and extra spaces)
-// expectedParagraph = expectedParagraph.replace("\n", " ").replaceAll("\\s+", " ").trim();
-// actualParagraph = actualParagraph.replace("\n", " ").replaceAll("\\s+", " ").trim();
-
-// //Print both values for debugging
-// System.out.println("Expected Paragraph: '" + expectedParagraph + "'");
-// System.out.println("Actual Paragraph: '" + actualParagraph + "'");
-
-// //Assert that the expected and actual values are equal
-// AssertJUnit.assertEquals("Paragraphs are not equal", expectedParagraph, actualParagraph);
-		
-WebElement tableRow = driver.findElement(By.xpath("//tr[th[text()='Brains'] and th[text()='Gestation week(GW)'] and th[text()='Sectioning Plane'] and th[text()='Available Datasets'] and th[text()='Annotations'] and th[text()='Volumes'] and th[text()='Videos']]"));
-
-		String brains = tableRow.findElement(By.xpath("th[1]")).getText();
-
-		String gestationWeek = tableRow.findElement(By.xpath("th[2]")).getText();
-
-		String sectioningPlane = tableRow.findElement(By.xpath("th[3]")).getText();
-
-		String availableDatasets = tableRow.findElement(By.xpath("th[4]")).getText();
-
-		String annotations = tableRow.findElement(By.xpath("th[5]")).getText();
-
-		String volumes = tableRow.findElement(By.xpath("th[6]")).getText();
-
-		String videos = tableRow.findElement(By.xpath("th[7]")).getText();
-
-		System.out.println("Brains: " + brains);
-
-		System.out.println("Gestation Week (GW): " + gestationWeek);
-
-		System.out.println("Sectioning Plane: " + sectioningPlane);
-
-		System.out.println("Available Datasets: " + availableDatasets);
-
-		System.out.println("Annotations: " + annotations);
-
-		System.out.println("Volumes: " + volumes);
-
-		System.out.println("Videos: " + videos);
-
-		
-		String Ncount = "Nissl (395)";
-		WebElement N1 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=NISSL')])[1]"));
-		String Ncount1 = N1.getText();
-		System.out.println("Expected Ncount: " + Ncount);
-		System.out.println("Actual Ncount from WebElement: " + Ncount1);
-		try {
-		    AssertJUnit.assertEquals("Nissl counts are not equal!", Ncount, Ncount1);
-		    System.out.println("Assertion Passed: Both counts are equal.");
-		} catch (AssertionError e) {
-		    System.err.println("Assertion Failed: " + e.getMessage());
-		    throw e; // Rethrow to ensure test failure
-		}
-		String Hcount = "H&E (341)";
-		WebElement H1 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=HE')])[1]"));
-		String Hcount1 = H1.getText();
-		System.out.println("Expected HEOS Count: " + Hcount);
-		System.out.println("Actual HEOS Count from WebElement: " + Hcount1);
-
-		try {
-		    AssertJUnit.assertEquals("HEOS counts are not equal!", Hcount, Hcount1);
-		    System.out.println("Assertion Passed: Both counts are equal.");
-		} catch (AssertionError e) {
-		    System.err.println("Assertion Failed: " + e.getMessage());
-		    throw e; // Rethrow to ensure test failure
-		}
-
-		String Ncount_1 = "Nissl (536)";
-		WebElement N2 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=NISSL')])[2]"));
-		String Ncount2 = N2.getText();
-		System.out.println("Expected Nissl Count: " + Ncount_1);
-		System.out.println("Actual Nissl Count from WebElement: " + Ncount2);
-
-		try {
-		    AssertJUnit.assertEquals("Nissl counts are not equal!", Ncount_1, Ncount2);
-		    System.out.println("Assertion Passed: Both counts are equal.");
-		} catch (AssertionError e) {
-		    System.err.println("Assertion Failed: " + e.getMessage());
-		    throw e; // Rethrow to ensure test failure
-		}
-		System.out.println("--------------------------*****************-----------------------");
-		String Hcount_1 = "H&E (485)";
-		WebElement H2 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=HE')])[2]"));
-		String Hcount2 = H2.getText();
-		System.out.println("Expected HEOS Count: " + Hcount_1);
-		System.out.println("Actual HEOS Count from WebElement: " + Hcount2);
-
-		try {
-		    AssertJUnit.assertEquals("HEOS counts are not equal!", Hcount_1, Hcount2);
-		    System.out.println("Assertion Passed: Both counts are equal.");
-		} catch (AssertionError e) {
-		    System.err.println("Assertion Failed: " + e.getMessage());
-		    throw e; // Rethrow to ensure test failure
-		}
-		System.out.println("--------------------------*****************-----------------------");
-		String Ncount_2 = "Nissl (540)";
-		WebElement N3 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=NISSL')])[3]"));
-		String Ncount3 = N3.getText();
-		System.out.println("Expected Nissl Count: " + Ncount_2);
-		System.out.println("Actual Nissl Count from WebElement: " + Ncount3);
-
-		try {
-		    AssertJUnit.assertEquals("Nissl counts are not equal!", Ncount_2, Ncount3);
-		    System.out.println("Assertion Passed: Both counts are equal.");
-		} catch (AssertionError e) {
-		    System.err.println("Assertion Failed: " + e.getMessage());
-		    throw e; // Rethrow to ensure test failure
-		}
-		System.out.println("--------------------------*****************-----------------------");
-		String Hcount_2 = "H&E (467)";
-		WebElement H3 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=HE')])[3]"));
-		String Hcount3 = H3.getText();
-		System.out.println("Expected HEOS Count: " + Hcount_2);
-		System.out.println("Actual HEOS Count from WebElement: " + Hcount3);
-
-		try {
-		    AssertJUnit.assertEquals("HEOS counts are not equal!", Hcount_2, Hcount3);
-		    System.out.println("Assertion Passed: Both counts are equal.");
-		} catch (AssertionError e) {
-		    System.err.println("Assertion Failed: " + e.getMessage());
-		    throw e; // Rethrow to ensure test failure
-		}
-		System.out.println("--------------------------*****************-----------------------");
-		String Ncount_3 = "Nissl (689)";
-		WebElement N4 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=NISSL')])[4]"));
-		String Ncount5 = N4.getText();
-		System.out.println("Expected Nissl Count: " + Ncount_3);
-		System.out.println("Actual Nissl Count from WebElement: " + Ncount5);
-
-		try {
-		    AssertJUnit.assertEquals("Nissl counts are not equal!", Ncount_3, Ncount5);
-		    System.out.println("Assertion Passed: Both counts are equal.");
-		} catch (AssertionError e) {
-		    System.err.println("Assertion Failed: " + e.getMessage());
-		    throw e; // Rethrow to ensure test failure
-		}
-		System.out.println("--------------------------*****************-----------------------");
-		String Hcount_3 = "H&E (687)";
-		WebElement H4 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=HE')])[4]"));
-		String Hcount4 = H4.getText();
-		System.out.println("Expected HEOS Count: " + Hcount_3);
-		System.out.println("Actual HEOS Count from WebElement: " + Hcount4);
-
-		try {
-		    AssertJUnit.assertEquals("HEOS counts are not equal!", Hcount_3, Hcount4);
-		    System.out.println("Assertion Passed: Both counts are equal.");
-		} catch (AssertionError e) {
-		    System.err.println("Assertion Failed: " + e.getMessage());
-		    throw e; // Rethrow to ensure test failure
-		}
-		System.out.println("--------------------------*****************-----------------------");
-		String Ncount_4 = "Nissl (657)";
-		WebElement N5 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=NISSL')])[5]"));
-		String Ncount6 = N5.getText();
-		System.out.println("Expected Nissl Count: " + Ncount_4);
-		System.out.println("Actual Nissl Count from WebElement: " + Ncount6);
-
-		try {
-		    AssertJUnit.assertEquals("Nissl counts are not equal!", Ncount_4, Ncount6);
-		    System.out.println("Assertion Passed: Both counts are equal.");
-		} catch (AssertionError e) {
-		    System.err.println("Assertion Failed: " + e.getMessage());
-		    throw e; // Rethrow to ensure test failure
-		}
-		System.out.println("--------------------------*****************-----------------------");
-		String Hcount_4 = "H&E (335)";
-		WebElement H5 = driver.findElement(By.xpath("(//div/a[contains(@href, 'seriesType=HE')])[5]"));
-		String Hcount5 = H5.getText();
-		System.out.println("Expected HEOS Count: " + Hcount_4);
-		System.out.println("Actual HEOS Count from WebElement: " + Hcount5);
-
-		try {
-		    AssertJUnit.assertEquals("HEOS counts are not equal!", Hcount_4, Hcount5);
-		    System.out.println("Assertion Passed: Both counts are equal.");
-		} catch (AssertionError e) {
-		    System.err.println("Assertion Failed: " + e.getMessage());
-		    throw e; // Rethrow to ensure test failure
-		}
-		System.out.println("--------------------------*****************-----------------------");
-
-		System.out.println("Home Page Content Validation Done");
-	}
-	public void clickLinkAndHandleTab(String xpath, String identifier) {
-
-		try {
-
-			// Wait for the link to be clickable
-
-			WebDriverWait wait = new WebDriverWait(driver, 30);
-
-			WebElement link = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-	// Click the link
-
-			link.click();
-
-			System.out.println("--------------------------*****************-----------------------");
-
-			System.out.println("The Link for " + identifier + " Clicked Successfully");
-			Thread.sleep(3000);
-
-			String parentWindow = driver.getWindowHandle();
-
-			for (String windowHandle : driver.getWindowHandles()) {
-
-				if (!windowHandle.equals(parentWindow)) {
-
-					driver.switchTo().window(windowHandle); // Switch to the new tab
-
-					break;
-
-				}
-
-			}
-
-
-			driver.close();
-
-			// Switch back to the parent window
-
-			driver.switchTo().window(parentWindow);
-
-		} catch (Exception e) {
-
-			System.out.println("--------------------------*****************-----------------------");
-
-			System.out.println("The Link for " + identifier + " not Clicked");
-
-			e.printStackTrace();
-
-		}
-
-	}
-	@Test(priority = 3)
-	public void LinkValidation1() {
-
-	    // Define your XPath values for multiple links
-	    String[] xpaths = {
-	        "//a[@href='/code/2dviewer/annotation/public?type=hd&data=0&seriesType=NISSL']",
-	        "//a[@href='/code/2dviewer/annotation/public?type=hd&data=1&seriesType=NISSL']",
-	        "//a[@href='/code/2dviewer/annotation/public?type=hd&data=2&seriesType=NISSL']",
-	        "//a[@href='/code/2dviewer/annotation/public?type=hd&data=3&seriesType=NISSL']",
-	        "//a[@href='/code/2dviewer/annotation/public?type=hd&data=4&seriesType=NISSL']",
-	        "//a[@href='/code/2dviewer/annotation/public?type=hd&data=0&seriesType=HE']",
-	        "//a[@href='/code/2dviewer/annotation/public?type=hd&data=1&seriesType=HE']",
-	        "//a[@href='/code/2dviewer/annotation/public?type=hd&data=2&seriesType=HE']",
-	        "//a[@href='/code/2dviewer/annotation/public?type=hd&data=3&seriesType=HE']",
-	        "//a[@href='/code/2dviewer/annotation/public?type=hd&data=4&seriesType=HE']"
-	    };
-
-	    String[] identifiers = {
-	        "NISSL Data 0 Link",
-	        "NISSL Data 1 Link",
-	        "NISSL Data 2 Link",
-	        "NISSL Data 3 Link",
-	        "NISSL Data 4 Link",
-	        "HE Data 0 Link",
-	        "HE Data 1 Link",
-	        "HE Data 2 Link",
-	        "HE Data 3 Link",
-	        "HE Data 4 Link"
-	    };
-
-	    for (int i = 0; i < xpaths.length; i++) {
-	        clickLinkAndHandleTab(xpaths[i], identifiers[i]);
-	    }
-	}
-
-	// Method to click a link and handle the tab
-	public void clickLinkAndHandleTab1(String xpath, String identifier) {
-	    try {
-	        // Locate the element by XPath
-	        WebElement link = driver.findElement(By.xpath(xpath));
-	        
-	        // Click the link
-	        link.click();
-	        
-	        // Log the clicked link identifier
-	        System.out.println("Clicked on: " + identifier);
-	        
-	        // Wait and handle the new tab
-	        Thread.sleep(3000); // Replace with WebDriverWait for better performance
-	        Set<String> tabs = driver.getWindowHandles();
-	        Iterator<String> iterator = tabs.iterator();
-	        String currentTab = driver.getWindowHandle();
-	        
-	        // Switch to the new tab
-	        while (iterator.hasNext()) {
-	            String newTab = iterator.next();
-	            if (!newTab.equals(currentTab)) {
-	                driver.switchTo().window(newTab);
-	                System.out.println("Switched to new tab: " + driver.getTitle());
-	                
-	                // Perform validation or actions in the new tab
-	                
-	                // Close the new tab and switch back
-	                driver.close();
-	                driver.switchTo().window(currentTab);
-	            }
-	        }
-	    } catch (Exception e) {
-	        System.out.println("Error handling link: " + identifier + " - " + e.getMessage());
-	    }
-	}
 	
-	
+    public static void main(String[] args) {
+        Map<String, String> webSockets = new HashMap<>();
+        webSockets.put("dev2mani.humanbrain.in WebSocket", "wss://dev2mani.humanbrain.in/aiAgentServer/ws/ai_agent");
+        webSockets.put("apollo2.humanbrain.in WebSocket", "wss://apollo2.humanbrain.in/aiAgentServer/ws/ai_agent");
 
-	@Test(priority = 4)
+        for (Map.Entry<String, String> entry : webSockets.entrySet()) {
+            String serverName = entry.getKey();
+            String webSocketUrl = entry.getValue();
 
-	public void LinkValidation() throws InterruptedException {
-		Thread.sleep(5000);
+            try {
+                testWebSocketConnection(serverName, webSocketUrl);
+            } catch (Exception e) {
+                System.out.println("❌ Exception while checking " + serverName + ": " + e.getMessage());
+                sendAlertMail(serverName, e.getMessage(), "222 1000", "Divya D", 193, "Neurovoyager");
+            }
+        }
+    }
 
-		// Define your XPath values for multiple links (including the new one you mentioned)
+    private static void testWebSocketConnection(String serverName, String webSocketUrl) throws InterruptedException {
+        System.out.println("🔍 Connecting to " + serverName + " → " + webSocketUrl);
 
-		String[] xpaths = {
+        CountDownLatch latch = new CountDownLatch(1);
 
-				"//a[@href='/code/2dviewer/annotation/public?data=0']",
+        WebSocketClient client = new WebSocketClient(URI.create(webSocketUrl)) {
 
-				"//a[@href='/code/2dviewer/annotation/public?data=1']",
+            private StringBuilder responseBuffer = new StringBuilder();
+            private ScheduledExecutorService scheduler;
+            private ScheduledFuture<?> timeoutFuture;
 
-				"//a[@href='/code/2dviewer/annotation/public?data=2']",
+            @Override
+            public void onOpen(ServerHandshake handshake) {
+            	  String[] pagesToTest = {"Atlas Editor", "SomeOtherPage", "Neurovoyager"};
+                String testMessage = "{"
+                        + "\"query\": \"222 1000\","
+                        + "\"user\": \"Divya D\","
+                        + "\"userId\": 193,"
+                        + "\"page\": \"Neurovoyager\","
+                        + "\"page_context\": {}"
+                        + "}";
+                send(testMessage);
+                System.out.println("📤 Sent: " + testMessage);
 
-				"//a[@href='/code/2dviewer/annotation/public?data=3']",
+                scheduler = Executors.newSingleThreadScheduledExecutor();
+                timeoutFuture = scheduler.schedule(() -> {
+                    logFailureMessage(serverName, "Timeout (15 seconds)");
+                    latch.countDown();
+                    close();
+                }, 15, TimeUnit.SECONDS);
+            }
 
-				"//a[@href='/code/2dviewer/annotation/public?data=4']",
+            @Override
+            public void onMessage(String message) {
+                System.out.println("📥 Received: " + message);
+                responseBuffer.append(message);
 
-				"//a[@href='/3dviewer/index.html?data=0&view=mri']", // New link added
+                if (message.contains("###END")) {
+                    if (timeoutFuture != null) timeoutFuture.cancel(true);
+                    System.out.println("✅ Full AI Agent response received from " + serverName + ":");
+                    System.out.println(responseBuffer.toString());
+                    latch.countDown();
+                    close();
+                }
+            }
 
-				"//a[@href='/3dviewer/index.html?data=1&view=mri']", // New link added
+            @Override
+            public void onClose(int code, String reason, boolean remote) {
+                System.out.println("❌ WebSocket Closed for " + serverName + ". Code: " + code + ", Reason: " + reason);
+                if (timeoutFuture != null) timeoutFuture.cancel(true);
+                if (scheduler != null) scheduler.shutdownNow();
+                latch.countDown();
+            }
 
-				"//a[@href='/3dviewer/index.html?data=2&view=mri']" , // New link added
+            @Override
+            public void onError(Exception ex) {
+                System.out.println("❌ Error in " + serverName + " WebSocket: " + ex.getMessage());
+                logFailureMessage(serverName, ex.getMessage());
+                if (timeoutFuture != null) timeoutFuture.cancel(true);
+                if (scheduler != null) scheduler.shutdownNow();
+                latch.countDown();
+            }
+        };
 
-				"//a[@href='/3dviewer/index.html?data=3&view=mri']",
+        try {
+            client.connectBlocking();
+        } catch (Exception e) {
+            System.out.println("❌ Could not connect to " + serverName + " WebSocket: " + e.getMessage());
+            sendAlertMail(serverName, e.getMessage(), "222 1000", "Divya D", 193, "Neurovoyager");
+            return;
+        }
 
-				"//a[@href='/3dviewer/index.html?data=4&view=mri']",
+        latch.await(); // Wait until message received or timeout
+    }
 
-				"//a[@href='/3dviewer/index.html?data=0&view=nissl']",
+    private static void logFailureMessage(String serverName, String reason) {
+        String message = "❌ " + serverName + " WebSocket health check failed. Reason: " + reason;
+        System.out.println(message);
+        sendAlertMail(serverName, reason, "222 1000", "Divya D", 193, "Neurovoyager");
+    }
 
-				"//a[@href='/3dviewer/index.html?data=1&view=nissl']",
+    private static void sendAlertMail(String serverName, String reason, String query, String user, int userId, String page) {
+        String[] to = {"sriramv@htic.iitm.ac.in"};
+        String[] cc = {"venip@htic.iitm.ac.in", "divya.d@htic.iitm.ac.in", "gayathri@htic.iitm.ac.in"};
+        String from = "gayathri@htic.iitm.ac.in";
+        String host = "smtp.gmail.com";
 
-				"//a[@href='/3dviewer/index.html?data=2&view=nissl']",
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
 
-				"//a[@href='/3dviewer/index.html?data=3&view=nissl']",
+        Session session = Session.getInstance(properties, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("automationsoftware25@gmail.com", "wjzcgaramsqvagxu");
+            }
+        });
 
-				"//a[@href='/3dviewer/index.html?data=4&view=nissl']",
+        session.setDebug(true);
 
-				"//a[@href='/3dviewer/index.html?data=0&view=gray']",
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
 
-				"//a[@href='/3dviewer/index.html?data=1&view=gray']",
+            for (String recipient : to) {
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            }
+            for (String ccRecipient : cc) {
+                message.addRecipient(Message.RecipientType.CC, new InternetAddress(ccRecipient));
+            }
 
-				"//a[@href='/3dviewer/index.html?data=2&view=gray']",
+            message.setSubject("AI Agent - WebSocket Connection Issue Alert: " + serverName);
 
-				"//a[@href='/3dviewer/index.html?data=3&view=gray']",
+            String currentTime = java.time.LocalDateTime.now().toString();
 
-				"//a[@href='/3dviewer/index.html?data=4&view=gray']",
+            String content = "<div style='font-family: Arial, sans-serif; font-size: 14px; color: #333;'>"
+                + "<h3 style='color: #D9534F;'>🚨 AI Agent WebSocket Connection Failure Alert</h3>"
+                + "<p>Hi Team,</p>"
+                + "<p><strong>WebSocket connection to <span style='color:#5bc0de;'>" + serverName + "</span> failed at <strong>" + currentTime + "</strong>.</strong></p>"
+                + "<p><u><strong>Error Details:</strong></u></p>"
+                + "<ul>"
+                + "<li><strong>Page:</strong> " + page + "</li>"
+                + "<li><strong>User:</strong> " + user + " (ID: " + userId + ")</li>"
+                + "<li><strong>Query:</strong> " + query + "</li>"
+                + "<li><strong>Reason:</strong> " + reason + "</li>"
+                + "</ul>"
+                + "<p><u><strong>Action:</strong></u></p>"
+                + "<p>Please check WebSocket server status, nginx proxy configuration, and SSL certificate.</p>"
+                + "<br><p style='color: #555;'>Regards,<br><b>Automated Monitoring</b></p>"
+                + "</div>";
 
-		};
-		String[] identifiers = {
+            message.setContent(content, "text/html");
 
-				"Specimen 1 Annotation Link",
+            System.out.println("Sending reachability alert email...");
+            Transport.send(message);
+            System.out.println("Email sent successfully.");
 
-				"Specimen 2 Annotation Link",
-
-				"Specimen 3 Annotation Link",
-
-				"Specimen 4 Annotation Link",
-
-				"Specimen 5 Annotation Link",
-
-				"MRI View 1 Link",  // Identifier for new link
-
-				"MRI View 2 Link",  // Identifier for new link
-
-				"MRI View 3 Link" ,
-
-				"MRI View 4 Link",
-
-				"MRI View 5 Link",
-
-				"Nissl View 1 Link",
-
-				"Nissl View 2 Link",
-
-				"Nissl View 3 Link",
-
-				"Nissl View 4 Link",
-
-				"Nissl View 5 Link",
-
-				"Nissl Gray Scale View 1 Link",
-
-				"Nissl Gray Scale View 2 Link",
-
-				"Nissl Gray Scale View 3 Link",
-
-				"Nissl Gray Scale View 4 Link",
-
-				"Nissl Gray Scale View 5 Link", 
-
-		};
-
-		for (int i = 0; i < xpaths.length; i++) {
-
-			clickLinkAndHandleTab(xpaths[i], identifiers[i]);
-
-		}
-
-		System.out.println("--------------------------*****************-----------------------");
-
-	}
-
-	@AfterTest
-
-	public void tearDown() {
-
-		if (driver != null) {
-
-			driver.quit();
-
-		}
-
-	}
-
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+    }
 }
-
